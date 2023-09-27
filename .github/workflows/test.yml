@@ -1,0 +1,19 @@
+name: Test run for github actions variables
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  testing:
+    name: test-scripts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if branch name is release
+        run: |
+          if [ '${{ github.ref }}' == 'refs/heads/main'] ]; then
+            echo "SERVICE=prod-mediamanager-api" >> $GITHUB_ENV
+            echo "REGION=us-east1" >> $GITHUB_ENV
+            echo "Deploying to production"
+          fi
