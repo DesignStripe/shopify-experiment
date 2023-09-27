@@ -10,14 +10,6 @@ jobs:
     name: test-scripts
     runs-on: ubuntu-latest
     steps:
-      - name: Set the value
-        id: step_one
-        run: |
-          echo "action_state=yellow" >> "$GITHUB_ENV"
-      - name: Use the value
-        id: step_twof
-        run: |
-          printf '%s\n' "$action_state" # This will output 'yellow'
       - name: Check if branch name is main with quotes
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
@@ -28,7 +20,7 @@ jobs:
           printf '%s\n' "$action_state" # This will output 'yellow'
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
-      - name: Check if branch name is main with evn
+      - name: Check if branch name is main with environment
         if: ${{ env.GITHUB_REF == 'refs/heads/main' }} 
         run: |
           if [ ${{ github.ref }} == 'refs/heads/main'] ]; then
@@ -36,24 +28,6 @@ jobs:
           fi
       - name: Use the value
         id: step_four
-        run: |
-          printf '%s\n' "$action_state" # This will output 'yellow'
-      - name: Check if branch name is release
-        run: |
-          if [ ${{ github.ref }} == 'refs/heads/release'] ]; then
-            echo "action_state=releasetrue" >> "$GITHUB_ENV"
-          fi
-      - name: Use the value
-        id: step_five
-        run: |
-          printf '%s\n' "$action_state" # This will output 'yellow'
-      - name: Check if branch name is release
-        run: |
-          if [ 1 == 1] ]; then
-            echo "action_state=truetrue" >> "$GITHUB_ENV"
-          fi
-      - name: Use the value
-        id: step_six
         run: |
           printf '%s\n' "$action_state" # This will output 'yellow'
           
