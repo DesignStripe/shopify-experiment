@@ -18,25 +18,21 @@ jobs:
         id: step_twof
         run: |
           printf '%s\n' "$action_state" # This will output 'yellow'
-      - name: Use the value
-        id: step_two
-        run: |
-          printf '%s\n' "$action_state" # This will output 'yellow'
       - name: Check if branch name is main with quotes
+        if: ${{ github.ref == 'refs/heads/main' }}
         run: |
-          if [ '${{ github.ref }}' == 'refs/heads/main'] ]; then
             echo "action_state=maintrue" >> "$GITHUB_ENV"
-          fi
       - name: Use the value
         id: step_three
         run: |
           printf '%s\n' "$action_state" # This will output 'yellow'
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
-      - name: Check if branch name is main without quotes
+      - name: Check if branch name is main with evn
+        if: ${{ env.GITHUB_REF == 'refs/heads/main' }} 
         run: |
           if [ ${{ github.ref }} == 'refs/heads/main'] ]; then
-            echo "action_state=mainnoquotetrue" >> "$GITHUB_ENV"
+            echo "action_state=mainnoenvtrue" >> "$GITHUB_ENV"
           fi
       - name: Use the value
         id: step_four
