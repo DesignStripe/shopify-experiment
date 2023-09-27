@@ -10,10 +10,35 @@ jobs:
     name: test-scripts
     runs-on: ubuntu-latest
     steps:
-      - name: Check if branch name is release
+      - name: Check if branch name is main with quotes
         run: |
           if [ '${{ github.ref }}' == 'refs/heads/main'] ]; then
-            echo "SERVICE=prod-mediamanager-api" >> $GITHUB_ENV
-            echo "REGION=us-east1" >> $GITHUB_ENV
-            echo "Deploying to production"
+            echo "Got a match on quotes"
+          fi
+  testing2:
+    name: test-scripts2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if branch name is main without quotes
+        run: |
+          if [ ${{ github.ref }} == 'refs/heads/main'] ]; then
+            echo "Got a match on no quotes"
+          fi
+  testing3:
+    name: test-scripts3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if branch name is release
+        run: |
+          if [ ${{ github.ref }} == 'refs/heads/release'] ]; then
+            echo "Got a match on release"
+          fi
+  testing4:
+    name: test-scripts4
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if branch name is release
+        run: |
+          if [ 1 == 1] ]; then
+            echo "Got a match on dummy"
           fi
